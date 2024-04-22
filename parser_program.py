@@ -41,28 +41,32 @@ class Parser:
         """Parse the input string using the parsing table and rules"""
         while True:
             # State = top of stack, second item in tuple
-            self.state = self.stack[-1][1]
+            self.state = int(self.stack[-1][1])
 
             if self.current_char == "i":
                 self.advance()
                 self.current_char = "id"
 
             # Lookup action in parsing table given state and current input symbol
-            action = self.parsing_table[self.state][self.current_char]
-
-            # Call corresponding action function
-            if action[0] == "S":
-                self.shift(action[1])
-            elif action[0] == "R":
-                self.reduce(action[1])
-            elif action == "accept":
-                print("String is accepted")
-                break
+            if self.current_char in self.parsing_table[self.state]: # If action exists for current state and symbol
+                action = self.parsing_table[self.state][self.current_char]
+                # Call corresponding action function
+                if action[0] == "S":
+                    state = int(action[1:])
+                    self.shift(state)
+                    self.advance()
+                elif action[0] == "R":
+                    rule = int(action[1:])
+                    self.reduce(rule)
+                elif action == "accept":
+                    self.accepted = True
+                    break
+                else:
+                    self.accepted = False
+                    break
             else:
-                print("String is not accepted")
+                self.accepted = False
                 break
-
-            self.advance()
 
     def shift(self, state):
         """Shift the current symbol and the next state to stack"""
@@ -72,7 +76,7 @@ class Parser:
         """Reduce the stack by rhs of corresponding rule and replace with lhs and next state"""
         # Left hand side and right hand side to the equivalent lhs, rhs of tuple in production rule
         lhs,rhs = self.rules[rule]
-        # Pop the stack for the number of symbols in the rhs of rule 
+        # Pop the stack the number of symbols in the rhs of rule
         for symbols in range(len(rhs)):
             self.stack.pop()
         # Push the lhs symbol of the rule and the goto state according to the most recent state and lhs symbol
@@ -80,8 +84,17 @@ class Parser:
         self.stack.append((lhs, goto_state))
 
     def output(self):
-        """Print output of stack with input and action at every step"""
-        pass
+        """Print output of stack"""
+        
+        print(f"Input: {self.input}")
+
+        print("Stack:")
+        # print stack/input/action table
+
+        if self.accepted:
+            print("Output: String is accepted")
+        else: 
+            print("Output: String is not accepted")
 
 # Usage
 parser = Parser(input_string1)
