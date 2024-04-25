@@ -1,4 +1,4 @@
-input_string1 = "(id+id)$"
+input_string1 = "(id+id)*id$"
 input_string2 = "id*id$"
 input_string3 = "(id*)$"
 
@@ -22,7 +22,7 @@ class Parser:
         )
         self.parsing_table = {
             0: {"id": "S5", "(": "S4", "E": 1, "T": 2, "F": 3},
-            1: {"+": "S6", "$": "accept"},
+            1: {"+": "S6", "$": "Accepted"},
             2: {"+": "R2", "*": "S7", ")": "R2", "$": "R2"},
             3: {"+": "R4", "*": "R4", ")": "R4", "$": "R4"},
             4: {"id": "S5", "(": "S4", "E": 8, "T": 2, "F": 3},
@@ -63,7 +63,7 @@ class Parser:
                 elif action[0] == "R":
                     rule = int(action[1:])
                     self.reduce(rule)
-                elif action == "accept":
+                elif action == "Accepted":
                     self.accepted = True
                     break
             else:
@@ -82,9 +82,9 @@ class Parser:
                 f"{step:<5}\t{' '.join([f'{s[0]} {s[1]}' for s in stack]):<30}\t{input:20}\t{action:4}"
             )
         if self.accepted:
-            print("String is accepted")
+            print("Output: String is accepted")
         else:
-            print("String is not accepted")
+            print("Output: String is not accepted")
 
     def shift(self, state):
         """Shift the current symbol and the next state to stack"""
