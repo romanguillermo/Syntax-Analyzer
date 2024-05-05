@@ -43,9 +43,10 @@ class Parser:
     def parse(self):
         """Parse the input string using the parsing table and rules and display output"""
         steps = []  # For tracking the steps of the parser for output table
-        step = 1
+        step = 0
         while True:
-            # State = top of stack, second item in tuple
+            step += 1
+            # State = second item in (symbol,state) tuple at top of stack
             self.state = int(self.stack[-1][1])
 
             if self.current_char == "i":
@@ -70,8 +71,6 @@ class Parser:
                 self.accepted = False
                 break
 
-            step += 1
-
         # Output table
         print(f"Input: {self.input_const}")
         print("Stack:")
@@ -85,6 +84,7 @@ class Parser:
             print("Output: String is accepted")
         else:
             print("Output: String is not accepted")
+
 
     def shift(self, state):
         """Shift the current symbol and the next state to stack"""
@@ -105,3 +105,9 @@ class Parser:
 # Usage
 example = Parser(input_string1)
 example.parse()
+
+example2 = Parser(input_string2)
+example2.parse()
+
+example3 = Parser(input_string3)
+example3.parse()
