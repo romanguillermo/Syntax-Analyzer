@@ -3,7 +3,7 @@ Guillermo Roman - parser_program.py and documentation\
 Gautham Vegeraju\
 Julio Villegas
 
-This Python program implements a parser for a simple grammar using a parsing table. It takes an input string and parses it to determine if it is accepted by the grammar.
+parser_program.py implements a parser for a context free grammar using a parsing table. It takes an input string and parses it to determine if it is accepted by the grammar.
 
 The program will parse the three input strings: (id+id)*id$, id*id$, and (id*)$ and display the stack, input, action table and the result.
 
@@ -22,8 +22,6 @@ The code defines a `Parser` class that contains the following main components:
 - `reduce(self, rule)`: Reduces the stack by the right-hand side of the corresponding rule and replaces it with the left-hand side and the next state.
 
 ### Parsing Process
-
-The parser follows these steps to parse the input string:
 
 1. Initialize the stack with the starting symbol and state.
 2. While the input string is not empty or the stack is not empty:
