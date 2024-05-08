@@ -1,11 +1,11 @@
 # CPSC 323 Project 2 - Syntax-Analyzer
-Guillermo Roman - parser_program.py and documentation\
+Guillermo Roman - Parser_program.py, Parse trees, and Documentation\
 Gautham Vegeraju\
 Julio Villegas
 
-parser_program.py implements a parser for a context free grammar using a parsing table. It takes an input string and parses it to determine if it is accepted by the grammar.
+Parser_program.py implements a parser for a context free grammar using its production rules and parsing table. It takes an input string and parses it to determine if it is accepted by the grammar.
 
-The program will parse the three input strings: (id+id)*id$, id*id$, and (id*)$ and display the stack, input, action table and the result.
+The program will parse the three input strings: (id+id)* id$, id* id$, and (id*)$ and display the stack, input, action table and the result.
 
 You can edit the input strings or create a new Parser instance with a new input string
 
@@ -17,7 +17,7 @@ The code defines a `Parser` class that contains the following main components:
 
 - `__init__(self, input)`: Initializes the parser with the input string, production rules, and parsing table.
 - `next_char(self)`: Removes the first character from the input and sets the current character to the next character.
-- `parse(self)`: Parses the input string using the parsing table and rules and displays the output.
+- `parse(self)`: Parses the input string using the parsing table and rules to determine actions and displays the output.
 - `shift(self, state)`: Shifts the current symbol and the next state to the stack.
 - `reduce(self, rule)`: Reduces the stack by the right-hand side of the corresponding rule and replaces it with the left-hand side and the next state.
 

@@ -49,17 +49,23 @@ class Parser:
             # State = second item in (symbol,state) tuple at top of stack
             self.state = int(self.stack[-1][1])
 
-            if self.current_char == "i": # If current symbol is 'i', assume symbol is 'id'
+            if (
+                self.current_char == "i"
+            ):  # If current symbol is 'i', assume symbol is 'id'
                 self.current_char = "id"
 
             # Lookup action in parsing table given state and current input symbol
-            if (self.current_char in self.parsing_table[self.state]):  # If action exists for current state and symbol
+            if (
+                self.current_char in self.parsing_table[self.state]
+            ):  # If action exists for current state and symbol
                 action = self.parsing_table[self.state][self.current_char]
-                steps.append((step, self.stack.copy(), self.input, action)) # Append step to steps list before action is taken
+                steps.append(
+                    (step, self.stack.copy(), self.input, action)
+                )  # Append step to steps list before action is taken
                 if action[0] == "S":
                     state = int(action[1:])
                     self.shift(state)
-                    if self.current_char == "id": # if 'id', skip two characters
+                    if self.current_char == "id":  # if 'id', skip two characters
                         self.next_char()
                         self.next_char()
                     else:
@@ -70,24 +76,25 @@ class Parser:
                 elif action == "Accepted":
                     self.accepted = True
                     break
-            else: # If no valid action for current state and symbol, accepted is false, add last valid step to stack output before breaking
+            else:  # If no valid action for current state and symbol, accepted is false, add last valid step to stack output before breaking
                 steps.append((step, self.stack.copy(), self.input, action))
                 self.accepted = False
                 break
 
         # Output table
-        print(f"Input: {self.input_const}\n")
+        print(f"Input: {self.input_const}")
         print("Stack:")
         print(f"{'Step':<5}\t{'Stack':<25}\t{'Input':<20}\t{'Action':<4}")
         print("-" * 80)
         for step, stack, input, action in steps:
-            print(f"{step:<5}\t{' '.join([f'{s[0]} {s[1]}' for s in stack]):<25}\t{input:20}\t{action:4}")
+            print(
+                f"{step:<5}\t{' '.join([f'{s[0]} {s[1]}' for s in stack]):<25}\t{input:20}\t{action:4}"
+            )
 
         if self.accepted:
-            print("\nOutput: String is accepted\n")
+            print("Output: String is accepted\n")
         else:
-            print("\nOutput: String is not accepted\n")
-
+            print("Output: String is not accepted\n")
 
     def shift(self, state):
         """Shift the current symbol and the next state to stack"""
