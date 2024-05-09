@@ -1,7 +1,5 @@
 # CPSC 323 Project 2 - Syntax-Analyzer
 Guillermo Roman - Parser_program.py, Parse trees, and Documentation\
-Gautham Vegeraju\
-Julio Villegas
 
 https://github.com/romanguillermo/Syntax-Analyzer
 
